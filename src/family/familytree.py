@@ -21,4 +21,4 @@ class FamilyTree:
 
     def __init__(self, root):
         self.root = root
-        self.descendants = {}
+        self.familyMembers = {}
