@@ -1,6 +1,18 @@
-"""
-The file contains all the variables and function related to a person class.
-"""
+# -*- coding: UTF-8 -*-
+# /**
+# * Software Name : family
+# * Version : 0.1.0
+# *
+# * Copyright 2020. PUNDIR ASHISH.
+# *
+# *--------------------------------------------------------
+# * File Name : family/family.py
+# * Created : 2020-06-28
+# * Authors : PUNDIR ASHISH
+# *--------------------------------------------------------
+# */
+
+
 import enum
 
 

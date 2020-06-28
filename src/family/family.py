@@ -1,6 +1,16 @@
-"""
-This file contain class and function related to the family.
-"""
+# -*- coding: UTF-8 -*-
+# /**
+# * Software Name : family
+# * Version : 0.1.0
+# *
+# * Copyright 2020. PUNDIR ASHISH.
+# *
+# *--------------------------------------------------------
+# * File Name : family/family.py
+# * Created : 2020-06-28
+# * Authors : PUNDIR ASHISH
+# *--------------------------------------------------------
+# */
 
 
 class Family:
