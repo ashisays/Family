@@ -64,6 +64,7 @@ class Family:
         if self.married is False or not isinstance(child, Family):
             return False
         if child.bloodline.isBoy():
+            child.parent = self
             self.descendants["sons"][child.bloodline.name] = child
         else:
             self.descendants["daughters"][child.bloodline.name] = child
