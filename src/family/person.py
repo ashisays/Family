@@ -33,14 +33,14 @@ class Person:
         self.sex = sex
         self.parent = parent
 
-    def isBoy(self):
+    def is_boy(self):
         """
         Check if the person is boy or not.
         return, True if it is boy , else false
         """
         return self.sex == sex.male
 
-    def isGirl(self):
+    def is_girl(self):
         """
         Check if the person is girl or not.
         return, True if it is girl , else false

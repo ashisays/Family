@@ -37,7 +37,7 @@ class Family:
              ->return list of sons if found in the descendants dict.
                else return empty list.
         """
-        if self.bloodline.isBoy() or self.married is False:
+        if self.bloodline.is_boy() or self.married is False:
             return None
         else:
             return self.spouse
@@ -48,7 +48,7 @@ class Family:
              ->return list of sons if found in the descendants dict.
                else return empty list.
         """
-        if self.bloodline.isBoy() and self.married is True:
+        if self.bloodline.is_boy() and self.married is True:
             return self.spouse
         else:
             return None
@@ -63,7 +63,7 @@ class Family:
         # the child added should be of family class.
         if self.married is False or not isinstance(child, Family):
             return False
-        if child.bloodline.isBoy():
+        if child.bloodline.is_boy():
             child.parent = self
             self.descendants["sons"][child.bloodline.name] = child
         else:
