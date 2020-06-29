@@ -100,7 +100,7 @@ class Family:
         # check person is already married or not
         if self.married or spouse is None:
             return False
-        elif spouse.sex == self.family_head.sex:
+        elif spouse.sex == self.family_head._sex:
             return False
         # set spouse with
         self.spouse = spouse

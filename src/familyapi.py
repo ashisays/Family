@@ -40,6 +40,8 @@ def add_descendants(rootFamily, family_name, child_name, child_sex):
     :param rootFamily: object of family class.
     :return: family tree object.
     """
+    if child_name is None or child_sex is None:
+        return Message.CHILD_ADDITION_FAILED
     child = person.Person(name=child_name, sex=eval("Sex.%s" % child_sex), parent=None)
     child_sub_family = family.Family(family_head=child, spouse=None, parent=None)
     return rootFamily.add_descendants(family_name, child_sub_family)
