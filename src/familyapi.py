@@ -40,5 +40,19 @@ def add_descendants(rootFamily, family_name, child_name, child_sex):
     :return: family tree object.
     """
     child = person.Person(name=child_name, sex=eval("person.sex.%s" % child_sex), parent=None)
-    child_sub_family = family.Family(person=child, spouse=None,parent=None)
+    child_sub_family = family.Family(person=child, spouse=None, parent=None)
     return rootFamily.add_descendants(family_name, child_sub_family)
+
+
+def add_spouse(rootFamily, family_name, spouse_name, spouse_sex):
+    """
+    Add spouse to the family, if it have single male or female.
+    and sex is different for each other.
+    :param rootFamily: family tree.
+    :param family_name: family name to add the spouse to.
+    :param spouse_name: Name of spouse to be added.
+    :param spouse_sex: Sex of spouse to be added.
+    :return:
+    """
+    spouse = person.Person(name=spouse_name, sex=eval("person.sex.%s" % spouse_sex), parent=None)
+    return rootFamily.add_descendants_spouse(family_name, spouse)

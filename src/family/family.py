@@ -95,3 +95,13 @@ class Family:
             if isinstance(descendants_family, Family):
                 daughters.append(name)
         return daughters
+
+    def add_spouse(self, spouse):
+        # check person is already married or not
+        if self.married or spouse is None:
+            return False
+        elif spouse.sex == self.bloodline.sex:
+            return False
+        # set spouse with
+        self.spouse = spouse
+        return True
