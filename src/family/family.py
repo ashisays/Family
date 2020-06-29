@@ -11,97 +11,88 @@
 # * Authors : PUNDIR ASHISH
 # *--------------------------------------------------------
 # */
+from src.family import person
+from src.family.constants import Sex
 
 
 class Family:
-    """Class representing Family
-       It can either be for type single and married.
-       Single only contain one person, married contain spouse and person.
+    """
+    Class representing Family
     """
 
-    def __init__(self, family_head, parent, spouse=None):
-        self.parent = parent
-        self.family_head = family_head
-        self.spouse = spouse
-        self.married = False
-        if spouse is not None:
-            self.married = True
-        self.descendants = {
-            "sons": {}, "daughters": {}
-        }
-        self.girlFamilyList = []
+    def __init__(self, name, gender="male"):
+        # gender = eval("Sex.%s" % gender)
+        self.family_head = self.create_member(name,gender)
 
-    def get_son_in_law(self):
+    def get_childrens_from_family(self,family_head):
         """
-        return the list of male childs in the family
-             ->return list of sons if found in the descendants dict.
-               else return empty list.
+        get detailed list of childrens from the family related to family head.
+        :param family_head: object of family
+        :return: list of childrens of family.
         """
-        if self.family_head.is_boy() or self.married is False:
+        if family_head.get_sex() == Sex.female:
+            return family_head.get_childs()
+        elif family_head.is_married():
+            return family_head.get_spouse().get_childs()
+
+    def search_family_member(self, family_head, member_name):
+        """
+        Search a member in the family based on family head and member names.
+        :param family_head: Object of the family head where member to be searched
+        :param member_name: name of the family member to be searched.
+        :return: return family member object or None if not found.
+        """
+        if family_head is None or member_name is None:
             return None
+        # if member to be searched is head or head spouse.
+        if member_name == family_head.name:
+            return family_head
+        elif self.search_family_member(family_head.get_spouse(), member_name) is not None:
+            return family_head.get_spouse()
+
+        # fetch children list for family.
+        children_list = self.get_childrens_from_family(family_head)
+        # search member in children lists.
+        return self.find_member_in_family_members(children_list, member_name)
+
+    def find_member_in_family_members(self, family_members, member_name):
+        """
+        Find the member in a list of family members members
+        :param children_list:
+        :param member_name:
+        :return:
+        """
+        found_member = None
+        for family_member in family_members:
+            found_member = self.search_family_member(family_member, member_name)
+            if found_member is not None:
+                break
+        return found_member
+
+    @staticmethod
+    def create_member(member_name, gender):
+        """
+        Create the member from details provided.
+        :param member_name: name of the member.
+        :param gender: gender of the member.
+        :return:
+        """
+        if Sex.male == eval("Sex.%s" %gender):
+            return person.Male(member_name)
         else:
-            return self.spouse
+            return person.Female(member_name)
 
-    def get_daughter_in_law(self):
+    def add_spouse(self, member_name, spouse_name, spouse_gender):
         """
-        return the list of male childs in the family
-             ->return list of sons if found in the descendants dict.
-               else return empty list.
+        add spouse to family in to member with member name,
+        :param member_name: name of family member to add spouse to.
+        :param spouse_name: Spouse name to be added to family.
+        :param spouse_gender: gender of spouse to be added.
+        :return: True is succeed, False if fails.
         """
-        if self.family_head.is_boy() and self.married is True:
-            return self.spouse
-        else:
-            return None
-
-    def add_children(self, child):
-        """
-        Add children family to the current family.
-        :param child: child , Instance of family.
-        :return: True on Success, False on Failure
-        """
-        # check if parents is married or not.
-        # the child added should be of family class.
-        if self.married is False or not isinstance(child, Family):
+        family_member = self.search_family_member(self.family_head, member_name)
+        if family_member is None or family_member.is_married():
             return False
-        if child.family_head.is_boy():
-            child.parent = self
-            self.descendants["sons"][child.family_head.name] = child
-        else:
-            self.descendants["daughters"][child.family_head.name] = child
-        return True
 
-    def get_sons(self):
-        """
-        return the list of male childs in the family
-             ->return list of sons if found in the descendants dict.
-               else return empty list.
-        """
-        print("In get sons")
-        sons = []
-        print(self.descendants["sons"])
-        for name, descendants_family in self.descendants["sons"].items():
-            if isinstance(descendants_family, Family):
-                sons.append(name)
-        return sons
-
-    def get_daughters(self):
-        """
-        return the list of female childs in the family
-            ->return list of daughters if found in the descendants dict.
-              else return empty list.
-        """
-        daughters = []
-        for name, descendants_family in self.descendants["daughters"].items():
-            if isinstance(descendants_family, Family):
-                daughters.append(name)
-        return daughters
-
-    def add_spouse(self, spouse):
-        # check person is already married or not
-        if self.married or spouse is None:
-            return False
-        elif spouse.sex == self.family_head._sex:
-            return False
-        # set spouse with
-        self.spouse = spouse
-        return True
+        spouse = self.create_member(spouse_name, spouse_gender)
+        return family_member.add_spouse(spouse)

@@ -23,6 +23,7 @@ class Person:
         self._father = father
         self._spouse = None
         self._sex = sex
+        self._child = []
 
     def is_boy(self):
         """
@@ -76,11 +77,11 @@ class Person:
         :param spouse:
         :return: True if succed else False
         """
-        if self.get_sex() == spouse.get_sex() or spouse.is_married():
+        if self.get_sex() == spouse.get_sex() or self.is_married() or spouse.is_married():
             return False
         # if spouse is adding you as spouse. Then add it as spouse
         self._spouse = spouse
-        spouse._spouse = self
+        spouse.add_spouse = self
         return True
 
     def get_spouse(self):
@@ -109,3 +110,9 @@ class Female(Person):
 
     def __init__(self, name, mother=None, father=None):
         Person.__init__(self, name, Sex.female, mother, father)
+
+    def add_child(self,child):
+        self._childs.append(child)
+
+    def get_childs(self):
+        return self._childs
