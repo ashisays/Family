@@ -22,7 +22,7 @@ class FamilyTree:
     def __init__(self, root):
         self.root = root
         self.familyMap = {
-            root.bloodline.name: root
+            root.family_head.name: root
         }
 
     def add_descendants(self, family_name, descendants):
@@ -42,7 +42,7 @@ class FamilyTree:
         if not sub_family.add_children(descendants):
             return False
         # add children name to family instance to the family map
-        self.familyMap[descendants.bloodline.name] = descendants
+        self.familyMap[descendants.family_head.name] = descendants
         return True
 
     def fetch_family(self, family_name):

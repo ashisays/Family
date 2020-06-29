@@ -11,18 +11,7 @@
 # * Authors : PUNDIR ASHISH
 # *--------------------------------------------------------
 # */
-
-
-import enum
-
-
-class sex(enum.Enum):
-    """
-    Sex enumeration for the person.
-    values are male or female.
-    """
-    male = 1
-    female = 2
+from src.family.constants import Sex
 
 
 class Person:
@@ -38,14 +27,14 @@ class Person:
         Check if the person is boy or not.
         return, True if it is boy , else false
         """
-        return self.sex == sex.male
+        return self.sex == Sex.male
 
     def is_girl(self):
         """
         Check if the person is girl or not.
         return, True if it is girl , else false
         """
-        return self.sex == sex.female
+        return self.sex == Sex.female
 
 
 class Male(Person):
@@ -54,7 +43,7 @@ class Male(Person):
     """
 
     def __init__(self, name, parent):
-        Person.__init__(self, name, sex.male, parent)
+        Person.__init__(self, name, Sex.male, parent)
 
 
 class Female(Person):
@@ -63,4 +52,4 @@ class Female(Person):
     """
 
     def __init__(self, name, parent):
-        Person.__init__(self, name, sex.female, parent)
+        Person.__init__(self, name, Sex.female, parent)

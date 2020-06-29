@@ -19,9 +19,9 @@ class Family:
        Single only contain one person, married contain spouse and person.
     """
 
-    def __init__(self, person, parent, spouse=None):
+    def __init__(self, family_head, parent, spouse=None):
         self.parent = parent
-        self.bloodline = person
+        self.family_head = family_head
         self.spouse = spouse
         self.married = False
         if spouse is not None:
@@ -37,7 +37,7 @@ class Family:
              ->return list of sons if found in the descendants dict.
                else return empty list.
         """
-        if self.bloodline.is_boy() or self.married is False:
+        if self.family_head.is_boy() or self.married is False:
             return None
         else:
             return self.spouse
@@ -48,7 +48,7 @@ class Family:
              ->return list of sons if found in the descendants dict.
                else return empty list.
         """
-        if self.bloodline.is_boy() and self.married is True:
+        if self.family_head.is_boy() and self.married is True:
             return self.spouse
         else:
             return None
@@ -63,11 +63,11 @@ class Family:
         # the child added should be of family class.
         if self.married is False or not isinstance(child, Family):
             return False
-        if child.bloodline.is_boy():
+        if child.family_head.is_boy():
             child.parent = self
-            self.descendants["sons"][child.bloodline.name] = child
+            self.descendants["sons"][child.family_head.name] = child
         else:
-            self.descendants["daughters"][child.bloodline.name] = child
+            self.descendants["daughters"][child.family_head.name] = child
         return True
 
     def get_sons(self):
@@ -100,7 +100,7 @@ class Family:
         # check person is already married or not
         if self.married or spouse is None:
             return False
-        elif spouse.sex == self.bloodline.sex:
+        elif spouse.sex == self.family_head.sex:
             return False
         # set spouse with
         self.spouse = spouse
