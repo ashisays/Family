@@ -24,7 +24,15 @@ class Family:
         # gender = eval("Sex.%s" % gender)
         self.family_head = self.create_member(name, gender)
         self.relationship_map = {
-                    RelationShip.SON : self.search_child,
+            RelationShip.SON: self.search_son,
+            RelationShip.DAUGHTER: self.search_daughters,
+            RelationShip.SIBLINGS: self.search_siblings,
+            RelationShip.BROTHER_IN_LAW: self.search_brother_in_law,
+            RelationShip.SISTER_IN_LAW: self.search_sister_in_law,
+            RelationShip.MATERNAL_AUNT: self.search_maternal_aunt,
+            RelationShip.PATERNAL_AUNT: self.search_paternal_aunt,
+            RelationShip.PATERNAL_UNCLE: self.search_paternal_uncle,
+            RelationShip.MATERNAL_UNCLE: self.search_maternal_uncle,
         }
 
     def get_childrens_from_family(self, family_head):
@@ -119,9 +127,74 @@ class Family:
         if family_member.add_child(child_member):
             return Message.CHILD_ADDITION_SUCCEEDED
 
-    def search_childs(self,gender):
+    def search_siblings(self, member_name):
         """
-        Search the childs based on the gender.
-        :param gender: gender of the childs.
+        Search the siblings based on the member_name.
+        :param member_name: gender of the childs.
         :return: list of childs
         """
+        pass
+
+    def search_son(self, member_name):
+        """
+        Search the childs based on the member_name.
+        :param member_name: gender of the childs.
+        :return: list of childs
+        """
+        pass
+
+    def search_daughters(self, member_name):
+        """
+        Search the daughter based on the member_name.
+        :param member_name: gender of the childs.
+        :return: list of childs
+        """
+        pass
+
+    def search_brother_in_law(self, member_name):
+        """
+        Search the brother in law based on the member_name.
+        :param member_name: gender of the childs.
+        :return: list of childs
+        """
+        pass
+
+    def search_sister_in_law(self, member_name):
+        """
+        Search the Sister in law based on the member_name.
+        :param member_name: gender of the childs.
+        :return: list of childs
+        """
+        pass
+
+    def search_maternal_aunt(self, member_name):
+        """
+        Search the Maternal Aunt based on the member_name.
+        :param member_name: gender of the childs.
+        :return: list of childs
+        """
+        pass
+
+    def search_maternal_uncle(self, member_name):
+        """
+        Search the Maternal Uncle based on the member_name.
+        :param member_name: gender of the childs.
+        :return: list of childs
+        """
+        pass
+
+    def search_paternal_aunt(self, member_name):
+        """
+        Search the Paternal Aunt based on the member_name.
+        :param member_name: gender of the childs.
+        :return: list of childs
+        """
+        pass
+
+    def search_paternal_uncle(self, member_name):
+        """
+        Search the Paternal Uncle based on the member_name.
+        :param member_name: gender of the childs.
+        :return: list of childs
+        """
+        pass
