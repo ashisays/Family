@@ -12,7 +12,7 @@
 # *--------------------------------------------------------
 # */
 from src.family import person
-from src.family.constants import Sex, Message
+from src.family.constants import Sex, Message, RelationShip
 
 
 class Family:
@@ -23,6 +23,9 @@ class Family:
     def __init__(self, name, gender="male"):
         # gender = eval("Sex.%s" % gender)
         self.family_head = self.create_member(name, gender)
+        self.relationship_map = {
+                    RelationShip.SON : self.search_child,
+        }
 
     def get_childrens_from_family(self, family_head):
         """
@@ -31,9 +34,9 @@ class Family:
         :return: list of childrens of family.
         """
         if family_head.get_sex() == Sex.female:
-            return family_head.get_childs()
+            return family_head.get_all_childs()
         elif family_head.is_married():
-            return family_head.get_spouse().get_childs()
+            return family_head.get_spouse().get_all_childs()
 
     def search_family_member(self, family_head, member_name):
         """
@@ -115,3 +118,10 @@ class Family:
         child_member = self.create_member(child_name, gender)
         if family_member.add_child(child_member):
             return Message.CHILD_ADDITION_SUCCEEDED
+
+    def search_childs(self,gender):
+        """
+        Search the childs based on the gender.
+        :param gender: gender of the childs.
+        :return: list of childs
+        """

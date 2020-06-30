@@ -75,7 +75,7 @@ class Person:
         add spouse to the person.
         check if gender of both is different
         :param spouse:
-        :return: True if succed else False
+        :return: True if succeed else False
         """
         if self.get_sex() == spouse.get_sex() or self.is_married() or spouse.is_married():
             return False
@@ -111,7 +111,7 @@ class Female(Person):
     def __init__(self, name, mother=None, father=None):
         Person.__init__(self, name, Sex.female, mother, father)
 
-    def add_child(self,child):
+    def add_child(self, child):
         """
         Add child to the person
         Check if child with same nams is added or not.
@@ -121,15 +121,42 @@ class Female(Person):
         if child is None:
             return False
         # check if child with same name is added.
-        for child_member in self.get_childs():
+        for child_member in self.get_all_childs():
             if child_member.name == child.name:
                 return False
         self._childs.append(child)
         return True
 
-    def get_childs(self):
+    def get_all_childs(self):
         """
         provide list of child members related to person.
         :return: empty list or list of childrens.
         """
         return self._childs
+
+    def get_siblings_of(self, gender, person_name):
+        """
+        fetch siblings of a person.
+        :param gender: gender of sibling to be fetched.
+        :param person_name: name of person whose siblings to be sent.
+        :return: list of siblings or empty list.
+        """
+        gender = eval("Sex.%s" % gender)
+        child_of_required_gender = []
+        for child in self._childs:
+            if child.get_sex() == gender and child.name is not person_name:
+                child_of_required_gender.append(child)
+        return child_of_required_gender
+
+    def get_childs(self, gender):
+        """
+        get childs list based on the gender.
+        :param gender: gender of the childs to fetch.
+        :return: lsit of childs with particular gender.
+        """
+        gender = eval("Sex.%s" % gender)
+        child_of_required_gender = []
+        for child in self._childs:
+            if child.get_sex() == gender:
+                child_of_required_gender.append(child)
+        return child_of_required_gender

@@ -31,8 +31,8 @@ class TestFamily(TestCase):
             self.fail("Not Able to add  child to list,which is not expected.")
 
     def test_add_child_and_get(self):
-        child_before_addition = len(self.family.family_head.get_spouse().get_childs())
+        child_before_addition = len(self.family.family_head.get_spouse().get_all_childs())
         self.family.add_child("Sonam", "Shyam", "female")
-        child_after_addition = len(self.family.family_head.get_spouse().get_childs())
+        child_after_addition = len(self.family.family_head.get_spouse().get_all_childs())
         if child_after_addition != (child_before_addition + 1):
             self.fail("Not Able to add  child to list,which is not expected.")
