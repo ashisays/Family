@@ -133,7 +133,10 @@ class Family:
         :param member_name: gender of the childs.
         :return: list of childs
         """
-        pass
+        family_member = self.search_family_member(self.family_head, member_name)
+        if family_member.get_mother() is None:
+            return []
+        return family_member.get_mother().get_siblings_of(family_member)
 
     def search_son(self, member_name):
         """
@@ -141,7 +144,8 @@ class Family:
         :param member_name: gender of the childs.
         :return: list of childs
         """
-        pass
+        family_member = self.search_family_member(self.family_head,member_name)
+        return family_member.get_childs("male")
 
     def search_daughters(self, member_name):
         """
@@ -149,7 +153,8 @@ class Family:
         :param member_name: gender of the childs.
         :return: list of childs
         """
-        pass
+        family_member = self.search_family_member(self.family_head, member_name)
+        return family_member.get_childs("female")
 
     def search_brother_in_law(self, member_name):
         """
@@ -157,7 +162,14 @@ class Family:
         :param member_name: gender of the childs.
         :return: list of childs
         """
-        pass
+        family_member = self.search_family_member(self.family_head, member_name)
+        # fetch spouse if not married return empty list.
+        if family_member.is_married() is None:
+            return []
+        if family_member.is_boy():
+            return family_member.get_spouse().get_childs("male")
+        else:
+            return family_member.get_spouse().get_childs("male")
 
     def search_sister_in_law(self, member_name):
         """
@@ -165,7 +177,14 @@ class Family:
         :param member_name: gender of the childs.
         :return: list of childs
         """
-        pass
+        family_member = self.search_family_member(self.family_head, member_name)
+        # fetch spouse if not married return empty list.
+        if family_member.is_married() is None:
+            return []
+        if family_member.is_boy():
+            return family_member.get_spouse().get_childs("female")
+        else:
+            return family_member.get_spouse().get_childs("female")
 
     def search_maternal_aunt(self, member_name):
         """
@@ -173,7 +192,11 @@ class Family:
         :param member_name: gender of the childs.
         :return: list of childs
         """
-        pass
+        family_member = self.search_family_member(self.family_head, member_name)
+        # fetch mother if not married return empty list.
+        if family_member.get_mother() is None:
+            return []
+        return family_member.get_mother().get_childs("female")
 
     def search_maternal_uncle(self, member_name):
         """
@@ -181,7 +204,11 @@ class Family:
         :param member_name: gender of the childs.
         :return: list of childs
         """
-        pass
+        family_member = self.search_family_member(self.family_head, member_name)
+        # fetch mother if not married return empty list.
+        if family_member.get_mother() is None:
+            return []
+        return family_member.get_mother().get_childs("male")
 
     def search_paternal_aunt(self, member_name):
         """
@@ -189,7 +216,11 @@ class Family:
         :param member_name: gender of the childs.
         :return: list of childs
         """
-        pass
+        family_member = self.search_family_member(self.family_head, member_name)
+        # fetch spouse if not married return empty list.
+        if family_member.get_father() is None:
+            return []
+        return family_member.get_father().get_childs("female")
 
     def search_paternal_uncle(self, member_name):
         """
@@ -197,4 +228,8 @@ class Family:
         :param member_name: gender of the childs.
         :return: list of childs
         """
-        pass
+        family_member = self.search_family_member(self.family_head, member_name)
+        # fetch spouse if not married return empty list.
+        if family_member.get_father() is None:
+            return []
+        return family_member.get_father().get_childs("male")

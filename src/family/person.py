@@ -81,7 +81,7 @@ class Person:
             return False
         # if spouse is adding you as spouse. Then add it as spouse
         self._spouse = spouse
-        spouse.add_spouse = self
+        spouse._spouse = self
         return True
 
     def get_spouse(self):
@@ -124,6 +124,9 @@ class Female(Person):
         for child_member in self.get_all_childs():
             if child_member.name == child.name:
                 return False
+        # update child mother and father details.
+        child.father = self.get_spouse()
+        child.mother = self
         self._childs.append(child)
         return True
 
