@@ -23,7 +23,7 @@ class Person:
         self._father = father
         self._spouse = None
         self._sex = sex
-        self._child = []
+        self._childs = []
 
     def is_boy(self):
         """
@@ -112,7 +112,19 @@ class Female(Person):
         Person.__init__(self, name, Sex.female, mother, father)
 
     def add_child(self,child):
+        """
+        Add child to the person
+        :param child: child member to be added.
+        :return:True if succed , else False.
+        """
+        if child is None:
+            return False
         self._childs.append(child)
+        return True
 
     def get_childs(self):
+        """
+        provide list of child members related to person.
+        :return: empty list or list of childrens.
+        """
         return self._childs
