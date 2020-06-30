@@ -114,11 +114,16 @@ class Female(Person):
     def add_child(self,child):
         """
         Add child to the person
+        Check if child with same nams is added or not.
         :param child: child member to be added.
         :return:True if succed , else False.
         """
         if child is None:
             return False
+        # check if child with same name is added.
+        for child_member in self.get_childs():
+            if child_member.name == child.name:
+                return False
         self._childs.append(child)
         return True
 
