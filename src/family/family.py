@@ -35,6 +35,15 @@ class Family:
             RelationShip.MATERNAL_UNCLE: self.search_maternal_uncle,
         }
 
+    def get_relationship(self,relationship,person_name):
+        """
+        get relationshipt based on relationship map and return the output.
+        :param relationship: output of relationship to be provided
+        :param person_name: person name to realate to.
+        :return: relationship output
+        """
+        pass
+
     def get_childrens_from_family(self, family_head):
         """
         get detailed list of childrens from the family related to family head.
