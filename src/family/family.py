@@ -42,7 +42,13 @@ class Family:
         :param person_name: person name to realate to.
         :return: relationship output
         """
-        pass
+        family_member = self.search_family_member(self.family_head,person_name)
+        if family_member is None :
+            return Message.PERSON_NOT_FOUND
+        if relationship is None:
+            return Message.PROVIDE_VALID_RELATION
+        relations = self.relationship_map[relationship](person_name)
+        return relations
 
     def get_childrens_from_family(self, family_head):
         """
