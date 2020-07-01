@@ -1,30 +1,35 @@
 from unittest import TestCase
 
-from src import familyapi
+from src.family.constants import Sex, Message
+from src.familyapi import FamilyAPI
 
 
-class Test(TestCase):
-    def test_create_family_tree(self):
-        tree = familyapi.create_family_tree("Ashish", "Sonam")
-        if "Ashish" not in tree.familyMap:
-            self.fail("family tree did not have expected value Ashish")
+class TestFamilyAPI(TestCase):
+    def setUp(self):
+        self.api = FamilyAPI()
+        self.api.add_family_head("Ashish",Sex.Male)
 
-    def test_add_descendants(self):
-        tree = familyapi.create_family_tree("Ashish", "Sonam")
-        familyapi.add_descendants(tree, "Ashish", "Ram", "male")
-        if "Ram" not in tree.familyMap:
-            self.fail("family tree did not have expected value Ram")
+    def test_call(self):
+        if self.api.call("xyz") != Message.INVALID_COMMAND.value:
+            self.fail("Api call failed")
+
+    def test_invalid_cmd(self):
+        if self.api.invalid_cmd() != Message.INVALID_COMMAND.value:
+            self.fail("invalid cmd failed")
+
+    def test_add_child(self):
+        if self.api.add_child("Ashish", "Ram", "Female") != Message.CHILD_ADDITION_FAILED.value:
+            self.fail("Child addition failed")
 
     def test_add_spouse(self):
-        tree = familyapi.create_family_tree("Ashish", "Sonam")
-        familyapi.add_descendants(tree, "Ashish", "Ram", "male")
-        familyapi.add_spouse(tree, "Ram", "Sita", "female")
-        if "Sita" not in tree.familyMap:
-            self.fail("family tree did not have expected value Sita")
+        if self.api.add_spouse("Ashish", "Ram", "Female") is not None:
+            self.fail("Child addition failed")
 
-    def test_add_spouse_negative(self):
-        tree = familyapi.create_family_tree("Ashish", "Sonam")
-        familyapi.add_descendants(tree, "Ashish", "Ram", "male")
-        familyapi.add_spouse(tree, "Ram", "Ravan", "male")
-        if "Ravan" in tree.familyMap:
-            self.fail("family tree did not have expected value Ravan")
+    def test_get_relationship(self):
+        if self.api.get_relationship("Ashish", "Son") != Message.NONE.value:
+            self.fail("Child addition failed")
+
+    def test_process_input_command(self):
+        if self.api.call("xyz ABC") != Message.INVALID_COMMAND.value:
+            self.fail("Api call failed")
+

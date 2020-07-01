@@ -84,20 +84,20 @@ class TestFemale(TestCase):
     def test_get_siblings_of(self):
         self.mother.add_child(self.girl)
         self.mother.add_child(self.boy1)
-        if len(self.mother.get_siblings_of("female",self.boy1.name)) != 1:
+        if len(self.mother.get_siblings_of(Sex.Female,self.boy1.name)) != 1:
             self.fail("fetchiing child failed expected 1, found %s"
-            %self.mother.get_siblings_of("female",self.boy1.name))
+            %self.mother.get_siblings_of("Female",self.boy1.name))
 
     def test_get_male_siblings(self):
         self.mother.add_child(self.girl)
         self.mother.add_child(self.boy1)
-        if len(self.mother.get_siblings_of("male", self.boy1.name)) != 0:
+        if len(self.mother.get_siblings_of("Male", self.boy1.name)) != 0:
             self.fail("fetchiing child failed expected 0, found %s"
-                      % self.mother.get_siblings_of("male", self.boy1.name))
+                      % self.mother.get_siblings_of("Male", self.boy1.name))
 
     def test_get_childs(self):
         self.mother.add_child(self.girl)
         self.mother.add_child(self.boy1)
-        if len(self.mother.get_childs("female")) != 1:
+        if len(self.mother.get_childs(Sex.Female)) != 1:
             self.fail("fetchiing child failed expected 1, found %s"
-                      % self.mother.get_childs("female"))
+                      % self.mother.get_childs("Female"))
