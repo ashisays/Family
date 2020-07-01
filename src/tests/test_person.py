@@ -19,7 +19,7 @@ class TestPerson(TestCase):
             self.fail("Testcase failed , exected True found %s" % self.girl.is_girl())
 
     def test_get_sex(self):
-        if self.girl.get_sex() != Sex.female:
+        if self.girl.get_sex() != Sex.Female:
             self.fail("Testcase failed , exected female found Male")
 
     def test_get_parent_name(self):

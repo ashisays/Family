@@ -63,7 +63,7 @@ class Family:
         :param family_head: object of family
         :return: list of childrens of family.
         """
-        if family_head.get_sex() == Sex.female:
+        if family_head.get_sex() == Sex.Female:
             return family_head.get_all_childs()
         elif family_head.is_married():
             return family_head.get_spouse().get_all_childs()
@@ -80,8 +80,9 @@ class Family:
         # if member to be searched is head or head spouse.
         if member_name == family_head.name:
             return family_head
-        elif self.search_family_member(family_head.get_spouse(), member_name) is not None:
-            return family_head.get_spouse()
+        elif family_head.is_married():
+            if (family_head.get_spouse().name, member_name) is not None:
+                return family_head.get_spouse()
 
         # fetch children list for family.
         children_list = self.get_childrens_from_family(family_head)
@@ -110,7 +111,7 @@ class Family:
         :param gender: gender of the member.
         :return:
         """
-        if Sex.male == eval("Sex.%s" % gender):
+        if Sex.Male == eval("Sex.%s" % gender):
             return person.Male(member_name)
         else:
             return person.Female(member_name)
@@ -142,7 +143,7 @@ class Family:
         if family_member is None:
             return Message.PERSON_NOT_FOUND
         # check if family_member is female.
-        if child_name is None or gender is None or family_member.get_sex() != Sex.female:
+        if child_name is None or gender is None or family_member.get_sex() != Sex.Female:
             return Message.CHILD_ADDITION_FAILED
 
         child_member = self.create_member(child_name, gender)

@@ -6,8 +6,8 @@ class Sex(Enum):
     Sex enumeration for the person.
     values are male or female.
     """
-    male = auto()
-    female = auto()
+    Male = auto()
+    Female = auto()
 
 
 class RelationShip(Enum):

@@ -11,9 +11,9 @@
 # * Authors : PUNDIR ASHISH
 # *--------------------------------------------------------
 # */
+import os
 
-from src.family import familytree, person, family
-from src.family.constants import Sex, Message, Commands, RelationShip
+from src.family import  family
 
 
 class FamilyAPI:
@@ -33,8 +33,11 @@ class FamilyAPI:
                  return "INVALID_COMMAND if its not supported."
         """
         method_name = commands[0].lower()
-        method = getattr(self, method_name, lambda: 'INVALID_COMMAND')
-        return method(commands[1:])
+        method = getattr(self, method_name, lambda args: 'INVALID_COMMAND')
+        if len(commands) ==3:
+            return method(commands[1],commands[2])
+        else:
+            return method(commands[1],commands[2],commands[3])
 
     def add_child(self, mother_name, child_name, gender):
         """
@@ -54,7 +57,7 @@ class FamilyAPI:
         :param spouse_gender: gender of spouse to be added.
         :return: return the status of the process in string format.
         """
-        self.family.add_spouse(member_name, spouse_name, spouse_gender)
+        return self.family.add_spouse(member_name, spouse_name, spouse_gender)
 
     def add_family_head(self, family_head_name, gender):
         """
@@ -74,23 +77,24 @@ class FamilyAPI:
         """
         return self.family.get_relationship(relationship, person_name)
 
-    def process_input_file(self, family_name, file, initialization=False):
+    def process_input_file(self, file):
         """
         process the input file and create family or process commands.
-        :param family_name: family name
         :param file: file to process.
         :return: True or False on success and failure respectively.
         """
-        with open(file, "r") as fd:
-            for command in fd.readlines():
-                self.process_input_command(family_name, command)
+        if not os.path.exists(file):
+            print('File Does Not Exist')
+        else:
+            with open(file, 'r') as fr:
+                for command in fr.readlines():
+                    print(self.process_input_command(command))
 
-    def process_input_command(self, family_name, command):
+    def process_input_command(self, command):
         """
         process  command to create family hirearchy from the file provided.
-        :param family_name: family to be created based on input file.
         :param command: command to be processed.
         :return:None
         """
-        command_params = command.split(" ")
-        self.call(command_params)
+        command_params = command.split(";")
+        return self.call(command_params)

@@ -30,7 +30,7 @@ class Person:
         Check if the person is boy or not.
         return, True if it is boy , else false
         """
-        return Sex.male == self._sex
+        return Sex.Male == self._sex
 
     def is_married(self):
         """
@@ -46,7 +46,7 @@ class Person:
         Check if the person is girl or not.
         return, True if it is girl , else false
         """
-        return self._sex == Sex.female
+        return self._sex == Sex.Female
 
     def get_sex(self):
         """
@@ -100,7 +100,7 @@ class Male(Person):
     """
 
     def __init__(self, name, mother=None, father=None):
-        Person.__init__(self, name, Sex.male, mother, father)
+        Person.__init__(self, name, Sex.Male, mother, father)
 
 
 class Female(Person):
@@ -109,7 +109,7 @@ class Female(Person):
     """
 
     def __init__(self, name, mother=None, father=None):
-        Person.__init__(self, name, Sex.female, mother, father)
+        Person.__init__(self, name, Sex.Female, mother, father)
 
     def add_child(self, child):
         """
