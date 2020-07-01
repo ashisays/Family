@@ -6,8 +6,8 @@ from src.family.constants import Message
 
 class TestFamily(TestCase):
     def setUp(self):
-        self.family = family.Family("Ashish", "male")
-        self.family.add_spouse("Ashish", "Sonam", "female")
+        self.family = family.Family("Ashish", "Male")
+        self.family.add_spouse("Ashish", "Sonam", "Female")
 
     def test_search_family_member(self):
         if self.family.search_family_member(self.family.family_head, "Ashish") is None:

@@ -125,8 +125,8 @@ class Female(Person):
             if child_member.name == child.name:
                 return False
         # update child mother and father details.
-        child.father = self.get_spouse()
-        child.mother = self
+        child._father = self.get_spouse()
+        child._mother = self
         self._childs.append(child)
         return True
 
@@ -137,18 +137,31 @@ class Female(Person):
         """
         return self._childs
 
-    def get_siblings_of(self, gender, person_name):
+    def get_siblings(self, person_name):
         """
         fetch siblings of a person.
-        :param gender: gender of sibling to be fetched.
         :param person_name: name of person whose siblings to be sent.
         :return: list of siblings or empty list.
         """
-        gender = eval("Sex.%s" % gender)
+        print (person_name)
         child_of_required_gender = []
         for child in self._childs:
-            if child.get_sex() == gender and child.name is not person_name:
-                child_of_required_gender.append(child)
+            if child.name != person_name:
+                child_of_required_gender.append(child.name)
+        return child_of_required_gender
+
+    def get_siblings_of(self, gender,person_name):
+        """
+        fetch siblings of a person.
+        :param person_name: name of person whose siblings to be sent.
+        :gender gender of sibling to be found.
+        :return: list of siblings or empty list.
+        """
+        print (person_name)
+        child_of_required_gender = []
+        for child in self._childs:
+            if child.get_sex() == gender and child.name != person_name:
+                child_of_required_gender.append(child.name)
         return child_of_required_gender
 
     def get_childs(self, gender):
@@ -157,9 +170,8 @@ class Female(Person):
         :param gender: gender of the childs to fetch.
         :return: lsit of childs with particular gender.
         """
-        gender = eval("Sex.%s" % gender)
         child_of_required_gender = []
         for child in self._childs:
             if child.get_sex() == gender:
-                child_of_required_gender.append(child)
+                child_of_required_gender.append(child.name)
         return child_of_required_gender

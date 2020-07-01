@@ -14,6 +14,7 @@
 import os
 
 from src.family import  family
+from src.family.constants import Message
 
 
 class FamilyAPI:
@@ -33,11 +34,19 @@ class FamilyAPI:
                  return "INVALID_COMMAND if its not supported."
         """
         method_name = commands[0].lower()
-        method = getattr(self, method_name, lambda args: 'INVALID_COMMAND')
+        method = getattr(self, method_name, self.invalid_cmd)
         if len(commands) ==3:
             return method(commands[1],commands[2])
         else:
             return method(commands[1],commands[2],commands[3])
+
+    def invalid_cmd(self, *args):
+        """
+        method to be called for default value.
+        :param *args any no of input
+        :return: return string "INVALID_COMMAND"
+        """
+        return Message.INVALID_COMMAND.value
 
     def add_child(self, mother_name, child_name, gender):
         """
@@ -68,13 +77,14 @@ class FamilyAPI:
         """
         self.family = family.Family(family_head_name, gender)
 
-    def get_relationship(self, relationship, person_name):
+    def get_relationship(self, person_name,relationship):
         """
         method fetch results of relationship for particular member name,
         :param relationship: relationship to be fetched.
         :param person_name: name of person relating to the values to be fetched.
         :return: sting of relationsip values
         """
+        print("in get relationship")
         return self.family.get_relationship(relationship, person_name)
 
     def process_input_file(self, file):
@@ -88,6 +98,7 @@ class FamilyAPI:
         else:
             with open(file, 'r') as fr:
                 for command in fr.readlines():
+                    command = command.replace('-', '_')
                     print(self.process_input_command(command))
 
     def process_input_command(self, command):
@@ -96,5 +107,5 @@ class FamilyAPI:
         :param command: command to be processed.
         :return:None
         """
-        command_params = command.split(";")
+        command_params = command.split(" ")
         return self.call(command_params)
