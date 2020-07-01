@@ -11,6 +11,7 @@
 # * Authors : PUNDIR ASHISH
 # *--------------------------------------------------------
 # */
+
 from src.family import person
 from src.family.constants import Sex, Message, RelationShip
 
@@ -35,22 +36,28 @@ class Family:
             RelationShip.MATERNAL_UNCLE: self.search_maternal_uncle,
         }
 
-    def get_relationship(self,relationship,person_name):
+    def get_relationship(self, relationship, person_name):
         """
         get relationshipt based on relationship map and return the output.
         :param relationship: output of relationship to be provided
         :param person_name: person name to realate to.
         :return: relationship output
         """
-        family_member = self.search_family_member(self.family_head,person_name)
-        if family_member is None :
+        family_member = self.search_family_member(self.family_head, person_name)
+        if family_member is None:
             return Message.PERSON_NOT_FOUND
-        if relationship is None:
+        if relationship not in self.relationship_map:
             return Message.PROVIDE_VALID_RELATION
-        relations = self.relationship_map[relationship](person_name)
-        return relations
+        # call mesasge related to relationship in the relationship map
+        relations = self.relationship_map[relationship](member_name=person_name)
+        # if relations return values, else return NONE
+        if relations:
+            return " ".join(relations)
+        else:
+            return Message.NONE
 
-    def get_childrens_from_family(self, family_head):
+    @staticmethod
+    def get_childrens_from_family(family_head):
         """
         get detailed list of childrens from the family related to family head.
         :param family_head: object of family
@@ -84,8 +91,8 @@ class Family:
     def find_member_in_family_members(self, family_members, member_name):
         """
         Find the member in a list of family members members
-        :param children_list:
-        :param member_name:
+        :param family_members:list of member to search by membername
+        :param member_name: name of member to be searched.
         :return:
         """
         found_member = None
@@ -159,7 +166,7 @@ class Family:
         :param member_name: gender of the childs.
         :return: list of childs
         """
-        family_member = self.search_family_member(self.family_head,member_name)
+        family_member = self.search_family_member(self.family_head, member_name)
         return family_member.get_childs("male")
 
     def search_daughters(self, member_name):
