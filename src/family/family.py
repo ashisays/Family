@@ -197,15 +197,16 @@ class Family:
         :param member_name: gender of the childs.
         :return: list of childs
         """
+        inlaws = []
         family_member = self.search_family_member(self.family_head, member_name)
         # fetch spouse if not married return empty list.
-        if family_member.is_married() is None:
-            return []
-        member_spouse_mother = family_member.get_spouse().get_mother()
-        if member_spouse_mother:
-            return member_spouse_mother.get_childs(Sex.Male)
-        else:
-            return []
+        siblings = family_member.get_siblings_of(Sex.Female, member_name)
+        for sibling in siblings:
+            if sibling.is_married():
+                inlaws.append(sibling.get_spouse().name)
+        if family_member.is_married():
+            inlaws.extend(family_member.get_spouse().get_siblings_name(Sex.Male, family_member.get_spouse().name))
+        return inlaws
 
     def search_sister_in_law(self, member_name):
         """
@@ -213,15 +214,16 @@ class Family:
         :param member_name: gender of the childs.
         :return: list of childs
         """
+        inlaws = []
         family_member = self.search_family_member(self.family_head, member_name)
         # fetch spouse if not married return empty list.
-        if family_member.is_married() is None:
-            return []
-        member_spouse_mother = family_member.get_spouse().get_mother()
-        if member_spouse_mother:
-            return member_spouse_mother.get_childs(Sex.Female)
-        else:
-            return []
+        siblings = family_member.get_siblings_of(Sex.Male,member_name)
+        for sibling in siblings:
+            if sibling.is_married():
+                inlaws.append(sibling.get_spouse().name)
+        if family_member.is_married():
+            inlaws.extend(family_member.get_spouse().get_siblings_name(Sex.Female,family_member.get_spouse().name))
+        return inlaws
 
     def search_maternal_aunt(self, member_name):
         """
@@ -231,12 +233,10 @@ class Family:
         """
         family_member = self.search_family_member(self.family_head, member_name)
         # fetch mother if not married return empty list.
-        if family_member.get_mother() is None:
+        mother = family_member.get_mother()
+        if mother is None:
             return []
-        grand_mother = family_member.get_mother().get_mother()
-        if grand_mother is None:
-            return []
-        return grand_mother.get_siblings_of(Sex.Female,family_member.get_mother().name)
+        return mother.get_siblings_name(Sex.Female,family_member.get_mother().name)
 
     def search_maternal_uncle(self, member_name):
         """
@@ -246,12 +246,10 @@ class Family:
         """
         family_member = self.search_family_member(self.family_head, member_name)
         # fetch mother if not married return empty list.
-        if family_member.get_mother() is None:
+        mother = family_member.get_mother()
+        if mother is None:
             return []
-        grand_mother =  family_member.get_mother().get_mother()
-        if grand_mother is None:
-            return []
-        return grand_mother.get_siblings_of(Sex.Male,family_member.get_mother().name)
+        return mother.get_siblings_name(Sex.Male,family_member.get_mother().name)
 
     def search_paternal_aunt(self, member_name):
         """
@@ -261,12 +259,10 @@ class Family:
         """
         family_member = self.search_family_member(self.family_head, member_name)
         # fetch spouse if not married return empty list.
-        if family_member.get_father() is None:
+        father = family_member.get_father()
+        if father is None:
             return []
-        grand_mother = family_member.get_father().get_mother()
-        if grand_mother is None:
-            return []
-        return grand_mother.get_siblings_of(Sex.Female,family_member.get_father().name)
+        return father.get_siblings_name(Sex.Female,family_member.get_father().name)
 
     def search_paternal_uncle(self, member_name):
         """
@@ -276,9 +272,7 @@ class Family:
         """
         family_member = self.search_family_member(self.family_head, member_name)
         # fetch spouse if not married return empty list.
-        if family_member.get_father() is None:
+        father = family_member.get_father()
+        if father is None:
             return []
-        grand_mother = family_member.get_father().get_mother()
-        if grand_mother is None:
-            return []
-        return grand_mother.get_siblings_of(Sex.Male,family_member.get_father().name)
+        return father.get_siblings_name(Sex.Male,family_member.get_father().name)

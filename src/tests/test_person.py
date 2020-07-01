@@ -81,10 +81,10 @@ class TestFemale(TestCase):
         if len(self.mother.get_all_childs())!= 2:
             self.fail("fetchiing child failed expected 2, found %s" %self.mother.get_all_childs(self.girl))
 
-    def test_get_siblings_of(self):
+    def test_get_siblings_name(self):
         self.mother.add_child(self.girl)
         self.mother.add_child(self.boy1)
-        if len(self.mother.get_siblings_of(Sex.Female,self.boy1.name)) != 1:
+        if len(self.boy1.get_siblings_of(Sex.Female,self.boy1.name)) != 1:
             self.fail("fetchiing child failed expected 1, found %s"
             %self.mother.get_siblings_of("Female",self.boy1.name))
 

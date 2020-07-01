@@ -30,6 +30,6 @@ class TestFamilyAPI(TestCase):
             self.fail("Child addition failed")
 
     def test_process_input_command(self):
-        if self.api.call("xyz ABC") != Message.INVALID_COMMAND.value:
+        if self.api.process_input_command("xyz ABC ASD ASD") != None:
             self.fail("Api call failed")
 

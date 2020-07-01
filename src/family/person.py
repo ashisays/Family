@@ -93,6 +93,35 @@ class Person:
             return self._spouse
         return None
 
+    def get_siblings_name(self, gender,person_name):
+        """
+        fetch siblings name of a person.
+        :param person_name: name of person whose siblings to be sent.
+        :gender gender of sibling to be found.
+        :return: list of siblings or empty list.
+        """
+        child_of_required_gender = []
+        if self.get_mother() is not None:
+            for child in self.get_mother()._childs:
+                if child.get_sex() == gender and child.name != person_name:
+                    child_of_required_gender.append(child.name)
+        return child_of_required_gender
+
+    def get_siblings_of(self, gender,person_name):
+        """
+        fetch siblings of a person.
+        :param person_name: name of person whose siblings to be sent.
+        :gender gender of sibling to be found.
+        :return: list of siblings or empty list.
+        """
+        child_of_required_gender = []
+        if self.get_mother() is not None:
+            for child in self.get_mother()._childs:
+                if child.get_sex() == gender and child.name != person_name:
+                    child_of_required_gender.append(child)
+        return child_of_required_gender
+
+
 
 class Male(Person):
     """Male class to create the Boy ,
@@ -143,26 +172,12 @@ class Female(Person):
         :param person_name: name of person whose siblings to be sent.
         :return: list of siblings or empty list.
         """
-        print (person_name)
         child_of_required_gender = []
         for child in self._childs:
             if child.name != person_name:
                 child_of_required_gender.append(child.name)
         return child_of_required_gender
 
-    def get_siblings_of(self, gender,person_name):
-        """
-        fetch siblings of a person.
-        :param person_name: name of person whose siblings to be sent.
-        :gender gender of sibling to be found.
-        :return: list of siblings or empty list.
-        """
-        print (person_name)
-        child_of_required_gender = []
-        for child in self._childs:
-            if child.get_sex() == gender and child.name != person_name:
-                child_of_required_gender.append(child.name)
-        return child_of_required_gender
 
     def get_childs(self, gender):
         """
